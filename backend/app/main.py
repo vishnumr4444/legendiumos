@@ -9,8 +9,8 @@ app = FastAPI(title="Legendium OS API", version="1.0.0",
               description="AI-powered project management and operational "
                           "intelligence platform for the Legendium ecosystem.")
 
-app.add_middleware(CORSMiddleware, allow_origins=CORS_ORIGINS,
-                   allow_credentials=True, allow_methods=["*"], allow_headers=["*"])
+app.add_middleware(CORSMiddleware, allow_origins=["*"],
+                   allow_credentials=False, allow_methods=["*"], allow_headers=["*"])
 
 for r in (auth_router.router, workitems.router, command_center.router,
           dashboards.router, misc.router):
