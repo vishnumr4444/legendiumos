@@ -1,0 +1,137 @@
+:root { --font-display: "Orbitron"; --font-body: "Space Grotesk"; }
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---------- Legendium dual identity tokens ---------- */
+:root {
+  --bg: #f4f7f9;
+  --bg2: #eaf0f3;
+  --panel: #ffffff;
+  --panel2: #f0f5f7;
+  --border: #d5e2e8;
+  --text: #0b2530;
+  --muted: #5d7a88;
+  --cyan: #0891b2;
+  --cyan-bright: #06b6d4;
+  --teal: #0d9488;
+  --accent2: #0e7490;
+  --danger: #dc2626;
+  --warn: #d97706;
+  --ok: #059669;
+  --glow: 0 0 0 transparent;
+  --ring-track: #dbe7ec;
+}
+.dark {
+  --bg: #04060e;
+  --bg2: #070b18;
+  --panel: #0a1222;
+  --panel2: #0d1730;
+  --border: rgba(34, 211, 238, 0.16);
+  --text: #e6f7ff;
+  --muted: #64819a;
+  --cyan: #22d3ee;
+  --cyan-bright: #67e8f9;
+  --teal: #2dd4bf;
+  --accent2: #60a5fa;
+  --danger: #f87171;
+  --warn: #fbbf24;
+  --ok: #34d399;
+  --glow: 0 0 24px rgba(34, 211, 238, 0.25);
+  --ring-track: #122036;
+}
+
+html, body { height: 100%; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body), sans-serif;
+  transition: background 0.4s ease, color 0.4s ease;
+}
+
+/* Night-mode universe backdrop: grid + drifting stars */
+.dark body {
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(34, 211, 238, 0.10), transparent),
+    linear-gradient(rgba(34, 211, 238, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34, 211, 238, 0.035) 1px, transparent 1px);
+  background-size: 100% 100%, 44px 44px, 44px 44px;
+}
+.starfield { position: fixed; inset: 0; pointer-events: none; z-index: 0; opacity: 0; transition: opacity 0.6s; }
+.dark .starfield { opacity: 1; }
+.star { position: absolute; border-radius: 9999px; background: var(--cyan-bright); animation: twinkle 4s ease-in-out infinite; }
+@keyframes twinkle { 0%, 100% { opacity: 0.15; } 50% { opacity: 0.8; } }
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  transition: background 0.4s, border-color 0.4s, transform 0.15s, box-shadow 0.3s;
+}
+.panel-hover:hover { transform: translateY(-2px); box-shadow: var(--glow); border-color: var(--cyan); }
+
+.display { font-family: var(--font-display), sans-serif; letter-spacing: 0.04em; }
+
+/* The twin pixels: Legendium's eyes (signature element from the logo's D) */
+.eyes { display: inline-flex; gap: 4px; align-items: center; }
+.eyes i {
+  width: 7px; height: 7px; border-radius: 2px;
+  background: var(--cyan); display: block;
+  box-shadow: 0 0 8px var(--cyan);
+  animation: blink 5s infinite;
+}
+.eyes i:nth-child(2) { animation-delay: 0.05s; }
+@keyframes blink { 0%, 92%, 100% { transform: scaleY(1); } 95% { transform: scaleY(0.1); } }
+.eyes.thinking i { animation: think 0.9s ease-in-out infinite; }
+.eyes.thinking i:nth-child(2) { animation-delay: 0.2s; }
+@keyframes think { 0%, 100% { transform: translateY(0); opacity: 0.6; } 50% { transform: translateY(-5px); opacity: 1; } }
+
+/* Reveal cascade for AI decomposition + dashboard cards */
+.reveal { animation: reveal 0.45s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+@keyframes reveal { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+.scan {
+  position: relative; overflow: hidden;
+}
+.dark .scan::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(110deg, transparent 40%, rgba(34, 211, 238, 0.06) 50%, transparent 60%);
+  animation: scan 5s linear infinite; pointer-events: none;
+}
+@keyframes scan { from { transform: translateX(-100%); } to { transform: translateX(100%); } }
+
+.chip { font-size: 11px; padding: 2px 8px; border-radius: 999px; border: 1px solid var(--border); color: var(--muted); white-space: nowrap; }
+.chip-cyan { color: var(--cyan); border-color: var(--cyan); }
+.chip-danger { color: var(--danger); border-color: var(--danger); }
+.chip-warn { color: var(--warn); border-color: var(--warn); }
+.chip-ok { color: var(--ok); border-color: var(--ok); }
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--cyan), var(--accent2));
+  color: #04141a; font-weight: 700; border-radius: 10px;
+  transition: filter 0.15s, transform 0.1s; 
+}
+.dark .btn-primary { color: #021018; box-shadow: 0 0 18px rgba(34, 211, 238, 0.35); }
+.btn-primary:hover { filter: brightness(1.1); }
+.btn-primary:active { transform: scale(0.98); }
+.btn-ghost { border: 1px solid var(--border); border-radius: 10px; color: var(--muted); transition: all 0.15s; }
+.btn-ghost:hover { color: var(--cyan); border-color: var(--cyan); }
+
+input, textarea, select {
+  background: var(--panel2); border: 1px solid var(--border);
+  border-radius: 10px; color: var(--text); outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+input:focus, textarea:focus { border-color: var(--cyan); box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.15); }
+
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+
+.kanban-card { cursor: grab; }
+.kanban-card:active { cursor: grabbing; }
+.kanban-col.drag-over { border-color: var(--cyan); box-shadow: var(--glow); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}

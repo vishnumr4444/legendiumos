@@ -1,0 +1,9 @@
+[build]
+  base = "frontend"
+  command = "npm run build"
+  publish = ".next"
+
+[build.environment]
+  # Update this environment variable to your deployed Firebase Functions URL
+  # e.g., https://api-yourprojectid.cloudfunctions.net/api
+  NEXT_PUBLIC_API_URL = "http://localhost:8000"
