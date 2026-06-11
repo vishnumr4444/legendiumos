@@ -7,7 +7,13 @@ JWT_EXPIRY_HOURS = int(os.getenv("JWT_EXPIRY_HOURS", "12"))
 
 # SQLite by default; point to Postgres in production:
 # postgresql+psycopg://user:pass@host:5432/legendium
-DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./legendium.db")
+_db_url = os.getenv("DATABASE_URL", "sqlite:///./legendium.db")
+if _db_url.startswith("postgres://"):
+    _db_url = _db_url.replace("postgres://", "postgresql+psycopg://", 1)
+elif _db_url.startswith("postgresql://"):
+    _db_url = _db_url.replace("postgresql://", "postgresql+psycopg://", 1)
+
+DATABASE_URL = _db_url
 
 # OpenAI (AI Command Center). Without a key the engine falls back to the
 # built-in deterministic decomposition templates so the demo works offline.
